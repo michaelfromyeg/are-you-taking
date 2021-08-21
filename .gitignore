@@ -1,3 +1,9 @@
+### General
+
+.env
+.env.production
+.env.local
+
 ### Node
 
 # Logs

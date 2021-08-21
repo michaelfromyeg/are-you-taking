@@ -1,0 +1,8 @@
+{
+    "python.pythonPath": "../backend/env/bin/activate",
+    "python.analysis.extraPaths": [
+        "backend"
+    ],
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+}
