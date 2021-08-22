@@ -18,15 +18,25 @@ const AddFile = () => {
 						console.log('api url', baseUrl)
 
 						// Create the calendar
-						const create = await fetch(`${baseUrl}/calendar`, { method: 'POST' })
-						const createBody = await create.json()
-						console.log('createBody', createBody)
+						const calendar = await fetch(`${baseUrl}/calendar`, { method: 'POST' })
+						const calendarBody = await calendar.json()
+						console.log('createBody', calendarBody)
 
 						// Get the calendar ID for redirect
-						const calendarId = createBody.id
+						const calendarId = calendarBody.id
+
+						const userForm = new FormData();
+						userForm.append('label', values.name);
+						userForm.append('calendar_id', calendarId)
+
+
+						const user = await fetch(`${baseUrl}/user`, { method: 'POST', body: userForm })
+						const userBody = await user.json()
+						console.log('userBody', userBody)
 
 						const formData = new FormData();
 						formData.append('file', values.file[0])
+						formData.append('user_id', userBody.id)
 
 						const response = await fetch(`${baseUrl}/calendar/${calendarId}/upload`, {
 							method: 'POST',
@@ -47,7 +57,10 @@ const AddFile = () => {
 					return (
 						<Form className={styles.form} encType="multipart/form-data">
 							<label>Name: </label>
-							<input className={styles.name} type="text" value={name} onChange={event => setName(event.target.value)}></input>
+							<input className={styles.name} type="text" value={name} onChange={event => {
+								setName(event.target.value)
+								formik.setFieldValue("name", name)
+							}}></input>
 							<input
 								id="file"
 								name="file"

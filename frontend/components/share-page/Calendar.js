@@ -4,7 +4,6 @@ import parse from "date-fns/parse"
 import startOfWeek from "date-fns/startOfWeek"
 import getDay from "date-fns/getDay"
 import "react-big-calendar/lib/css/react-big-calendar.css"
-import { useState, useEffect } from 'react'
 import styles from './Calendar.module.scss'
 
 const locales = {
@@ -21,26 +20,6 @@ const localizer = dateFnsLocalizer({
 
 const COLORS = ['blue', 'green', 'red', 'orange', 'pink', 'yellow']
 
-const dummyEvents = [
-	{
-		title: "meeting",
-		start: new Date(2021, 7, 10, 12, 10, 0),
-		end: new Date(2021, 7, 10, 14, 20, 0),
-		color: 'blue'
-	},
-	{
-		title: "test",
-		start: new Date(2021, 7, 10, 12, 10, 0),
-		end: new Date(2021, 7, 10, 14, 20, 0),
-		color: 'green'
-	},
-	{
-		title: "school",
-		start: new Date(2021, 7, 13),
-		end: new Date(2021, 7, 15),
-		color: 'red'
-	}
-]
 
 const CustomCalendar = ({ events }) => {
 	const eventStyleGetter = (event, start, end, isSelected) => {
@@ -55,12 +34,18 @@ const CustomCalendar = ({ events }) => {
 	}
 
 	const parseEvents = (events) => {
-		const newEvents = events.map((e, i) => {
+		const seenUsers = []
+		let color = -1;
+		const newEvents = events.map(e => {
+			if (!seenUsers.includes(e.user_id)) {
+				color = color + 1;
+				seenUsers.push(e.user_id)
+			}
 			return {
 				title: e.label,
 				start: new Date(e.start_time),
 				end: new Date(e.end_time),
-				color: COLORS[i],
+				color: COLORS[color],
 			}
 		})
 
