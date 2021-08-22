@@ -48,9 +48,10 @@ const AddFile = () => {
 			{(formik) => {
 				return (
 					<Form className={styles.form}>
-						<label>Name: </label>
+						<label className={styles.label}>Name: </label>
 						<input className={styles.name} type="text" value={name} onChange={event => setName(event.target.value)}></input>
 						<input
+							className={styles.file}
 							id="file"
 							name="calendar"
 							type="file"
