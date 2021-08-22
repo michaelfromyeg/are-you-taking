@@ -7,7 +7,14 @@
     "python.linting.enabled": true,
     "cSpell.enabled": true,
     "cSpell.words": [
+        "DTEND",
+        "cockroachdb",
+        "dotenv",
+        "gcal",
         "ical",
+        "icalendar",
+        "icalevents",
+        "psycopg",
         "werkzeug"
     ],
 }
