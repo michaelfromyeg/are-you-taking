@@ -8,12 +8,17 @@
     "cSpell.enabled": true,
     "cSpell.words": [
         "DTEND",
+        "Vinnick",
         "cockroachdb",
+        "connor",
+        "datepicker",
         "dotenv",
+        "formik",
         "gcal",
         "ical",
         "icalendar",
         "icalevents",
+        "noreferrer",
         "psycopg",
         "werkzeug"
     ],

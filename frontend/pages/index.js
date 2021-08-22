@@ -6,16 +6,13 @@ import Footer from '../components/Footer'
 export default function Home() {
   return (
     <>
-    <Head>
-      <title>are you taking</title>
-    </Head>
-
-    <Header text="are you taking"/>
-    <p style={{textAlign: "center", marginBottom: "3em"}}>Choose any .ics file and compare your schedule with other students</p>
-    <AddFile />
-
-    <Footer />
-
+      <Head>
+        <title>are you taking</title>
+      </Head>
+      <Header text="are you taking" />
+      <p style={{ textAlign: "center", marginBottom: "3em" }}>Upload any <code>.ics</code> file to instantly compare your class schedule with other students!</p>
+      <AddFile />
+      <Footer />
     </>
   )
 }

@@ -1,42 +1,49 @@
 import styles from './AddFile.module.scss'
-import { Formik, Form, ErrorMessage} from 'formik'
-import Router from 'next/router'
+import { Formik, Form, ErrorMessage } from 'formik'
+import { useRouter } from 'next/router'
 import Button from 'react-bootstrap/Button'
 
 const AddFile = () => {
-	
+	const router = useRouter()
+
 	return (
-		<Formik 
-		initialValues={{ calendar: []}} 
-		onSubmit={async (values, props) => {
-			let data = new FormData();
-			data.append('file', values.calendar[0])
-			try {
-				const response = await fetch( 'url', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'multipart/form-data'
-					},
-				});
+		<Formik
+			initialValues={{ calendar: [] }}
+			onSubmit={async (values, props) => {
+				try {
+					const baseUrl = process.env.API_URL || "http://localhost:8080"
+					console.log('api url', baseUrl)
 
-				/**
-				 * {
-				 * 	calendar_id: ...,
-				 * 
-				 * }
-				 */
+					// Create the calendar
+					const create = await fetch(`${baseUrl}/calendar`, { method: 'POST' })
+					const createBody = await create.json()
+					console.log('createBody', createBody)
 
-				const calendar_id = response.calendar_id
-				Router.push('/test')
-				// Redirect the user to BASE_URL/{calendar_id}
-			} catch (error) {
-				console.error(error)
-			}
-		}}
+					// Get the calendar ID for redirect
+					const calendarId = createBody.id
+
+					let data = new FormData();
+					data.append('file', values.calendar[0])
+					const response = await fetch(`${baseUrl}/calendar/${calendarId}/upload`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'multipart/form-data'
+						},
+						body: data
+					});
+
+					const responseBody = await response.json()
+					console.log(responseBody)
+
+					// Redirect the user to BASE_URL/{calendar_id}
+					router.push(`/calendar/${calendarId}`)
+				} catch (error) {
+					console.error(error)
+				}
+			}}
 		>
 			{(formik) => {
 				return (
-					<>
 					<Form className={styles.form}>
 						<input
 							id="file"
@@ -47,17 +54,14 @@ const AddFile = () => {
 								let myFiles = Array.from(files);
 								formik.setFieldValue("calendar", myFiles);
 							}}
-							/>
-							<ErrorMessage name="calendar"/>
-							<Button className={styles.submit} type="submit" disabled={formik.isSubmitting}>
-								Submit
-							</Button>
+						/>
+						<ErrorMessage name="calendar" />
+						<Button className={styles.submit} type="submit" disabled={formik.isSubmitting}>
+							Submit
+						</Button>
 					</Form>
-					</>
 				)
 			}}
-
-
 		</Formik>
 	)
 }

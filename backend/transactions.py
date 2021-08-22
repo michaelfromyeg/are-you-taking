@@ -4,24 +4,24 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_cockroachdb import run_transaction
 
+from dotenv import load_dotenv
+
 from models import Calendar, Event, User
 
 engine = None
-Session = None
 
 logger = logging.getLogger()
 
+load_dotenv()
 
-def db_conn():
-    db_uri = os.environ.get("DB_CONNECTION")
-    psycopg_uri = (
-        db_uri.replace("postgresql://", "cockroachdb://")
-        .replace("postgres://", "cockroachdb://")
-        .replace("26257?", "26257/ayt?")
-    )
+db_uri = os.environ.get("DB_CONNECTION")
+psycopg_uri = (
+    db_uri.replace("postgresql://", "cockroachdb://")
+    .replace("postgres://", "cockroachdb://")
+    .replace("26257?", "26257/ayt?")
+)
 
-    engine = create_engine(psycopg_uri)
-    Session = sessionmaker(engine)
+engine = create_engine(psycopg_uri)
 
 
 def create_calendar(label):
@@ -61,16 +61,11 @@ def _get_calendar(session, calendar_id: str):
     return calendar
 
 
-def delete_calendar(calendar_id: str):
+def _delete_calendar(session, calendar_id: str):
     """Delete a calendar by its ID"""
     logger.warn(f"Deleting calendar with ID {calendar_id}")
 
-    session = Session()
-    try:
-        calendar = session.query(Calendar).delete(calendar_id)
-        session.expunge(calendar)
-    finally:
-        session.close()
+    calendar = session.query(Calendar).delete(calendar_id)
 
     return calendar
 

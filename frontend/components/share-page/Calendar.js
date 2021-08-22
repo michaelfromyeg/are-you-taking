@@ -19,37 +19,31 @@ const localizer = dateFnsLocalizer({
 	locales
 })
 
-const allViews = Object.keys(Views).map(k => Views[k])
+const COLORS = ['blue', 'green', 'red', 'orange', 'pink', 'yellow']
 
 const events = [
-		{
-			title: "meeting",
-			start: new Date(2021,7,10,12,10,0),
-			end: new Date(2021,7,10,14,20,0),
-			color: 'blue'
-		},
-		{
-			title: "test",
-			start: new Date(2021,7,10,12,10,0),
-			end: new Date(2021,7,10,14,20,0),
-			color: 'green'
-		},
-		{
-			title: "school",
-			start: new Date(2021,7,13),
-			end: new Date(2021,7,15),
-			color: 'red'
-		}
-	]
+	{
+		title: "meeting",
+		start: new Date(2021, 7, 10, 12, 10, 0),
+		end: new Date(2021, 7, 10, 14, 20, 0),
+		color: 'blue'
+	},
+	{
+		title: "test",
+		start: new Date(2021, 7, 10, 12, 10, 0),
+		end: new Date(2021, 7, 10, 14, 20, 0),
+		color: 'green'
+	},
+	{
+		title: "school",
+		start: new Date(2021, 7, 13),
+		end: new Date(2021, 7, 15),
+		color: 'red'
+	}
+]
 
-const CustomCalendar = ({ users }) => {
-	const [allEvents, setAllEvents] = useState([])
-	
-	useEffect(() => {
-		setAllEvents(events)
-	}, [])
-
-	const eventStyleGetter = (event,start,end,isSelected) => {
+const CustomCalendar = ({ events }) => {
+	const eventStyleGetter = (event, start, end, isSelected) => {
 		const style = {
 			backgroundColor: event.color,
 			color: "white",
@@ -62,16 +56,15 @@ const CustomCalendar = ({ users }) => {
 
 	return (
 		<div className={styles.calendar}>
-			<Calendar 
-			localizer={localizer} 
-			views={["month", "week"]}
-			defaultView={Views.WEEK}
-			events={allEvents} 
-			startAccesor="start"
-			endAccessor="end"
-			style={{height: "1500px", width: "100%", margin: "50px",margin: 0,padding: "1em"}}
-			eventPropGetter={(eventStyleGetter)}
-		
+			<Calendar
+				localizer={localizer}
+				views={["month", "week"]}
+				defaultView={Views.WEEK}
+				events={events}
+				startAccessor="start_time"
+				endAccessor="end_time"
+				style={{ height: "1500px", width: "100%", margin: "50px", margin: 0, padding: "1em" }}
+				eventPropGetter={(eventStyleGetter)}
 			/>
 		</div>
 	)

@@ -1,11 +1,13 @@
 import logging, os, datetime
+
 from flask import Flask, request, send_from_directory
+from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
 from dotenv import load_dotenv
 
 from transactions import (
-    db_conn,
+    # db_conn,
     get_calendar,
     create_calendar,
     get_event,
@@ -25,6 +27,8 @@ app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = 1024 * 1024
 app.config["UPLOAD_EXTENSIONS"] = [".ical", ".ics"]
 app.config["UPLOAD_PATH"] = "uploads"
+
+cors = CORS(app)
 
 
 @app.route("/")
@@ -183,5 +187,4 @@ def get_user_by_id(user_id: str):
 
 if __name__ == "__main__":
     load_dotenv()
-    db_conn()
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
