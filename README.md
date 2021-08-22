@@ -1,6 +1,19 @@
-# are-you-taking
+# are you taking
+### by Michael DeMarco and Ben Vinnick
 
-## Backend
+##
+
+## Features
+
+- Share your calendar with friends
+- Compare your calendars
+
+  
+## Authors
+
+- [@michaeldemarco](https://github.com/michaelfromyeg)
+- [@benvinnick](https://github.com/bonvee-99)
+
 
 Set up Cockroach DB.
 
