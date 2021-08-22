@@ -1,0 +1,23 @@
+@import "../../styles/variables";
+
+.form {
+  background-color: lightgrey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 50vh;
+  background-color: $gold;
+  margin: 0 auto;
+}
+
+.submit {
+  background-color: $purple;
+  border: 2px solid $purple;
+}
+
+.submit:hover {
+  background-color: $purple;
+  border: 2px solid $purple;
+  opacity: 0.9;
+}

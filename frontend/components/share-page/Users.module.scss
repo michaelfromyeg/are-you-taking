@@ -1,0 +1,12 @@
+@import "../../styles/variables";
+
+.users {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-height: 60vh;
+  flex-wrap: wrap;
+  width: 10%;
+  border: 2px solid $purple;
+  list-style: none;
+}
