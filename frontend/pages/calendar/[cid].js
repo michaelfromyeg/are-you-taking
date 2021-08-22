@@ -5,7 +5,11 @@ import { useState, useEffect } from 'react'
 
 const SharedCalendarPage = ({ id }) => {
 
-	const [calendar, setCalendar] = useState({})
+	const [calendar, setCalendar] = useState({
+		events: [],
+		users: [],
+		label: 'Loading...',
+	})
 	const [loading, setLoading] = useState(true)
 
 	const baseUrl = process.env.API_URL || "http://localhost:8080"

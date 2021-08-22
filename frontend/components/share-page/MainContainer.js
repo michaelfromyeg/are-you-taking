@@ -22,15 +22,15 @@ const MainContainer = ({ calendar, loading }) => {
 	if (loading) {
 		return (
 			<div className={styles.mainContainer}>
-				<Calendar users={[]} />
+				<Calendar events={[]} />
 				<Users users={[]} onChange={onChange} />
 			</div>
 		)
 	} else {
 		return (
 			<div className={styles.mainContainer}>
-				<Calendar events={calendar.events} />
-				<Users users={calendar.users} onChange={onChange} />
+				<Calendar events={calendar.events || []} />
+				<Users users={calendar.users || []} onChange={onChange} />
 			</div>
 		)
 	}
