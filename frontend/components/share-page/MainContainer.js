@@ -5,6 +5,7 @@ import styles from './MainContainer.module.scss'
 
 const MainContainer = ({ calendar, loading }) => {
 	const [users, setUsers] = useState(calendar?.users || [])
+	const [events, setEvents] = useState(calendar?.events || [])
 
 	useEffect(() => {
 		const updateUsers = (newUsers) => {
@@ -13,10 +14,21 @@ const MainContainer = ({ calendar, loading }) => {
 		updateUsers(calendar.users)
 	}, [calendar]) // eslint-disable-line react-hooks/exhaustive-deps
 
+	useEffect(() => {
+		const updateEvents = (newEvents) => {
+			setEvents(newEvents)
+		}
+		updateEvents(calendar.events)
+	}, [calendar]) // eslint-disable-line react-hooks/exhaustive-deps
+
 	const onChange = (toggledUser) => {
 		setUsers(users.map(user => {
 			return user.name === toggledUser.name ? { ...user, display: !user.display } : user
 		}))
+
+		// setEvents(events.filter(event => {
+		// 	return event.user_id !== toggledUser.id
+		// }))
 	}
 
 	if (loading) {

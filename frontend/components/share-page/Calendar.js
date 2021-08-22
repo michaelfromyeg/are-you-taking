@@ -34,18 +34,18 @@ const CustomCalendar = ({ events }) => {
 	}
 
 	const parseEvents = (events) => {
-		const seenUsers = []
+		const seenUsers = {}
 		let color = -1;
 		const newEvents = events.map(e => {
-			if (!seenUsers.includes(e.user_id)) {
+			if (!Object.keys(seenUsers).includes(e.user_id)) {
 				color = color + 1;
-				seenUsers.push(e.user_id)
+				seenUsers[e.user_id] = COLORS[color]
 			}
 			return {
 				title: e.label,
 				start: new Date(e.start_time),
 				end: new Date(e.end_time),
-				color: COLORS[color],
+				color: seenUsers[e.user_id],
 			}
 		})
 
