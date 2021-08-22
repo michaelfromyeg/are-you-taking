@@ -1,6 +1,32 @@
-# are-you-taking
+# are you taking
 
-## Backend
+![Banner](Images/are-you-taking-banner.jpg)
+
+## Overview
+
+A calendar application inspired by UBC students to upload their course schedule or google calendar as an .ics file and compare them easily
+
+In the future we hope to add different types of calendar files and also add a feature where you are able to edit your own calendar within the app
+
+## Features
+
+- Upload your calendar.ics file
+  ![Home](Images/home-page.png)
+- Share your calendar with friends
+  ![Share](Images/share-page.png)
+- Compare your calendars
+- Toggle displayed users
+
+## Tech Stack
+
+- **Client:** React, Next, Sass, React-Big-Calendar, Bootstrap
+
+- **Server:** Flask, Cockroach DB
+
+## Authors
+
+- [@michaeldemarco](https://github.com/michaelfromyeg)
+- [@benvinnick](https://github.com/bonvee-99)
 
 Set up Cockroach DB.
 
