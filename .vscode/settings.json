@@ -5,4 +5,9 @@
     ],
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
+    "cSpell.enabled": true,
+    "cSpell.words": [
+        "ical",
+        "werkzeug"
+    ],
 }
