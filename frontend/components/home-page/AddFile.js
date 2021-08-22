@@ -2,11 +2,14 @@ import styles from './AddFile.module.scss'
 import { Formik, Form, ErrorMessage } from 'formik'
 import { useRouter } from 'next/router'
 import Button from 'react-bootstrap/Button'
+import { useState } from 'react'
 
 const AddFile = () => {
+	const [name, setName] = useState('')
 	const router = useRouter()
 
 	return (
+		<>
 		<Formik
 			initialValues={{ calendar: [] }}
 			onSubmit={async (values, props) => {
@@ -45,6 +48,8 @@ const AddFile = () => {
 			{(formik) => {
 				return (
 					<Form className={styles.form}>
+						<label>Name: </label>
+						<input className={styles.name} type="text" value={name} onChange={event => setName(event.target.value)}></input>
 						<input
 							id="file"
 							name="calendar"
@@ -59,10 +64,13 @@ const AddFile = () => {
 						<Button className={styles.submit} type="submit" disabled={formik.isSubmitting}>
 							Submit
 						</Button>
+
 					</Form>
 				)
 			}}
 		</Formik>
+		
+		</>
 	)
 }
 
