@@ -12,17 +12,19 @@ CREATE TABLE calendars (
     passphrase VARCHAR(60)
 );
 
-CREATE TABLE events (
-    id UUID PRIMARY KEY,
-    label VARCHAR(60),
-    body VARCHAR(300),
-    scheduled_time TIMESTAMP,
-    calendar_id UUID REFERENCES calendars(id)
-);
-
 CREATE TABLE users (
     id UUID PRIMARY KEY,
     label VARCHAR(60),
     passphrase VARCHAR(60),
     calendar_id UUID REFERENCES calendars(id)
+);
+
+CREATE TABLE events (
+    id UUID PRIMARY KEY,
+    label VARCHAR(60),
+    body VARCHAR(300),
+    start_time TIMESTAMP,
+    end_time TIMESTAMP,
+    calendar_id UUID REFERENCES calendars(id),
+    user_id UUID REFERENCES users(id)
 );

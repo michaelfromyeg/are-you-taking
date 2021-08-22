@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, ForeignKey, TIMESTAMP
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import declarative_base, registry, relationship
 
 Base = declarative_base()
 
@@ -16,6 +16,10 @@ class Calendar(Base):
     label = Column(String(length=60))
     passphrase = Column(String(length=60))
 
+    # Relationship with events, users
+    events = relationship("Event", back_populates="calendar")
+    users = relationship("User", back_populates="calendar")
+
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
@@ -30,8 +34,16 @@ class Event(Base):
     id = Column(UUID(as_uuid=True), primary_key=True)
     label = Column(String(length=60))
     body = Column(String(length=300))
-    scheduled_time = Column(TIMESTAMP)
-    calendar_id = Column(UUID(as_uuid=True), ForeignKey("calendar.id"))
+    start_time = Column(TIMESTAMP(timezone=True))
+    end_time = Column(TIMESTAMP(timezone=True))
+
+    # Relationship with calendar
+    calendar_id = Column(UUID(as_uuid=True), ForeignKey("calendars.id"))
+    calendar = relationship("Calendar", back_populates="events")
+
+    # Relationship with user
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"))
+    user = relationship("User", back_populates="events")
 
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -47,7 +59,13 @@ class User(Base):
     id = Column(UUID(as_uuid=True), primary_key=True)
     label = Column(String(length=60))
     passphrase = Column(String(length=60))
-    calendar_id = Column(UUID(as_uuid=True), ForeignKey("calendar.id"))
+
+    # Relationship with calendar
+    calendar_id = Column(UUID(as_uuid=True), ForeignKey("calendars.id"))
+    calendar = relationship("Calendar", back_populates="users")
+
+    # Relationship with events
+    events = relationship("Event", back_populates="user")
 
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
