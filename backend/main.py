@@ -2,7 +2,10 @@ import logging, os, datetime
 from flask import Flask, request, send_from_directory
 from werkzeug.utils import secure_filename
 
+from dotenv import load_dotenv
+
 from transactions import (
+    db_conn,
     get_calendar,
     create_calendar,
     get_event,
@@ -176,3 +179,9 @@ def get_user_by_id(user_id: str):
         return "No user found", 404
 
     return user.as_dict()
+
+
+if __name__ == "__main__":
+    load_dotenv()
+    db_conn()
+    app.run(host=os.environ.get("HOST"), port=os.environ.get("PORT"), debug=True)

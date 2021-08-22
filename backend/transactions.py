@@ -6,19 +6,22 @@ from sqlalchemy_cockroachdb import run_transaction
 
 from models import Calendar, Event, User
 
+engine = None
+Session = None
 
 logger = logging.getLogger()
 
-db_uri = os.environ.get("DB_CONNECTION")
-psycopg_uri = (
-    db_uri.replace("postgresql://", "cockroachdb://")
-    .replace("postgres://", "cockroachdb://")
-    .replace("26257?", "26257/ayt?")
-)
 
-engine = create_engine(psycopg_uri)
+def db_conn():
+    db_uri = os.environ.get("DB_CONNECTION")
+    psycopg_uri = (
+        db_uri.replace("postgresql://", "cockroachdb://")
+        .replace("postgres://", "cockroachdb://")
+        .replace("26257?", "26257/ayt?")
+    )
 
-Session = sessionmaker(engine)
+    engine = create_engine(psycopg_uri)
+    Session = sessionmaker(engine)
 
 
 def create_calendar(label):

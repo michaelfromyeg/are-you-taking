@@ -1,0 +1,5 @@
+# Any files that should not be copied to the container
+
+env/
+.cache/
+__pycache__
