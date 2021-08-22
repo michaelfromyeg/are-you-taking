@@ -22,14 +22,12 @@ const AddFile = () => {
 					// Get the calendar ID for redirect
 					const calendarId = createBody.id
 
-					let data = new FormData();
-					data.append('file', values.calendar[0])
+					const formData = new FormData();
+					formData.append('file', values.file[0])
+
 					const response = await fetch(`${baseUrl}/calendar/${calendarId}/upload`, {
 						method: 'POST',
-						headers: {
-							'Content-Type': 'multipart/form-data'
-						},
-						body: data
+						body: formData,
 					});
 
 					const responseBody = await response.json()
@@ -44,15 +42,15 @@ const AddFile = () => {
 		>
 			{(formik) => {
 				return (
-					<Form className={styles.form}>
+					<Form className={styles.form} encType="multipart/form-data">
 						<input
 							id="file"
-							name="calendar"
+							name="file"
 							type="file"
 							onChange={(event) => {
 								const files = event.target.files;
-								let myFiles = Array.from(files);
-								formik.setFieldValue("calendar", myFiles);
+								const filesArr = Array.from(files);
+								formik.setFieldValue("file", filesArr);
 							}}
 						/>
 						<ErrorMessage name="calendar" />

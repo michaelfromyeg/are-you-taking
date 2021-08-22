@@ -21,7 +21,7 @@ const localizer = dateFnsLocalizer({
 
 const COLORS = ['blue', 'green', 'red', 'orange', 'pink', 'yellow']
 
-const events = [
+const dummyEvents = [
 	{
 		title: "meeting",
 		start: new Date(2021, 7, 10, 12, 10, 0),
@@ -54,15 +54,31 @@ const CustomCalendar = ({ events }) => {
 		}
 	}
 
+	const parseEvents = (events) => {
+		const newEvents = events.map((e, i) => {
+			return {
+				title: e.label,
+				start: new Date(e.start_time),
+				end: new Date(e.end_time),
+				color: COLORS[i],
+			}
+		})
+
+		console.log(newEvents)
+
+		return newEvents
+	}
+
 	return (
 		<div className={styles.calendar}>
 			<Calendar
 				localizer={localizer}
 				views={["month", "week"]}
 				defaultView={Views.WEEK}
-				events={events}
-				startAccessor="start_time"
-				endAccessor="end_time"
+				// events={dummyEvents}
+				events={parseEvents(events)}
+				startAccessor="start"
+				endAccessor="end"
 				style={{ height: "1500px", width: "100%", margin: "50px", margin: 0, padding: "1em" }}
 				eventPropGetter={(eventStyleGetter)}
 			/>

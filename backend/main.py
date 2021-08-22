@@ -84,6 +84,7 @@ def update_calendar_by_id(calendar_id: str):
 @app.route("/calendar/<string:calendar_id>/upload", methods=["POST"])
 def upload_calendar(calendar_id: str):
     uploaded_file = None
+    logger.info(request.files)
     try:
         uploaded_file = request.files["file"]
     except KeyError:
