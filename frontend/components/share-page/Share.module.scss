@@ -1,0 +1,13 @@
+@import "../../styles/variables";
+
+.share {
+  width: 70%;
+  font-size: 2rem;
+  display: flex;
+  justify-content: space-around;
+  margin: 1em auto;
+  background-color: $gold;
+  color: $purple;
+  font-weight: bold;
+  text-align: center;
+}

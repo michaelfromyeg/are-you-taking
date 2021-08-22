@@ -1,0 +1,12 @@
+@import "../../styles/variables";
+
+.user {
+  font-size: 1.5rem;
+  color: $purple;
+}
+
+.userCol {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+}
