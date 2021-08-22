@@ -1,4 +1,4 @@
-import os, uuid, logging
+import os, uuid, logging, datetime
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -72,15 +72,30 @@ def delete_calendar(calendar_id: str):
     return calendar
 
 
-def create_event(label, body, start_time, end_time, calendar_id):
+def create_event(
+    label: str,
+    body: str,
+    start_time: datetime.datetime,
+    end_time: datetime.datetime,
+    calendar_id: str,
+    user_id: str,
+):
     return run_transaction(
         sessionmaker(bind=engine, expire_on_commit=False),
-        lambda s: _create_event(s, label, body, start_time, end_time, calendar_id),
+        lambda s: _create_event(
+            s, label, body, start_time, end_time, calendar_id, user_id
+        ),
     )
 
 
 def _create_event(
-    session, label: str, body: str, start_time: str, end_time: str, calendar_id: str
+    session,
+    label: str,
+    body: str,
+    start_time: str,
+    end_time: str,
+    calendar_id: str,
+    user_id: str,
 ):
     """Create a new event."""
     logger.info("Creating new event")
@@ -93,6 +108,7 @@ def _create_event(
         start_time=start_time,
         end_time=end_time,
         calendar_id=calendar_id,
+        user_id=user_id,
     )
 
     session.add(new_event)
@@ -158,21 +174,51 @@ def _get_user(session, user_id: str):
 
 
 def get_events_by_calendar_id(calendar_id: str):
+    return run_transaction(
+        sessionmaker(bind=engine, expire_on_commit=False),
+        lambda s: _get_events_by_calendar_id(s, calendar_id),
+    )
+
+
+def _get_events_by_calendar_id(session, calendar_id: str):
     """Return all events belonging to a given calendar ID."""
     logger.info(f"Getting events for calendar ID {calendar_id}")
 
-    session = Session()
-    try:
-        events = (
-            session.query(Event)
-            .select_from(Calendar)
-            .filter(Calendar.id == calendar_id)
-            .all()
-        )
-        for event in events:
-            session.expunge(event)
-    finally:
-        session.close()
+    # TODO: re-write as join
+    events = session.query(Event).filter(Event.calendar_id == calendar_id).all()
+
+    return events
+
+
+def get_users_by_calendar_id(calendar_id: str):
+    return run_transaction(
+        sessionmaker(bind=engine, expire_on_commit=False),
+        lambda s: _get_users_by_calendar_id(s, calendar_id),
+    )
+
+
+def _get_users_by_calendar_id(session, calendar_id: str):
+    """Return all users belonging to a given calendar ID."""
+    logger.info(f"Getting users for calendar ID {calendar_id}")
+
+    # TODO: re-write as join
+    users = session.query(User).filter(User.calendar_id == calendar_id).all()
+
+    return users
+
+
+def get_events_by_user_id(user_id: str):
+    return run_transaction(
+        sessionmaker(bind=engine, expire_on_commit=False),
+        lambda s: _get_events_by_user_id(s, user_id),
+    )
+
+
+def _get_events_by_user_id(session, user_id: str):
+    """Return all events belonging to a given user ID."""
+    logger.info(f"Getting events for user ID {user_id}")
+
+    events = session.query(Event).select_from(User).filter(User.id == user_id).all()
 
     return events
 

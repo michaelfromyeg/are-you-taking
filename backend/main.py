@@ -9,6 +9,7 @@ from transactions import (
     get_events_by_calendar_id,
     create_event,
     get_user,
+    get_users_by_calendar_id,
     create_user,
 )
 from helpers import is_valid_uuid
@@ -35,7 +36,10 @@ def health():
 
 @app.route("/calendar", methods=["POST"])
 def make_calendar():
-    calendar = create_calendar(label="Label 123")
+    label = request.form.get("label")
+
+    calendar = create_calendar(label=label)
+
     return calendar.as_dict()
 
 
@@ -44,14 +48,17 @@ def get_calendar_by_id(calendar_id: str):
     if not is_valid_uuid(calendar_id):
         return "The ID of the calendar must be a valid UUID.", 400
 
+    # TODO: make this faster; no need for multiple queries... can be one complex join instead!
     calendar = get_calendar(calendar_id)
     events = get_events_by_calendar_id(calendar_id)
+    users = get_users_by_calendar_id(calendar_id)
 
     if calendar is None:
         return "No calendar found", 404
 
     response = calendar.as_dict()
     response["events"] = [event.as_dict() for event in events]
+    response["users"] = [user.as_dict() for user in users]
 
     return response
 
@@ -63,6 +70,7 @@ def update_calendar_by_id(calendar_id: str):
         return "The ID of the calendar must be a valid UUID.", 400
 
     calendar = get_calendar(calendar_id)
+
     return calendar.as_dict()
 
 
@@ -82,8 +90,12 @@ def upload_calendar(calendar_id: str):
                 return "Invalid file type", 400
             uploaded_file.save(os.path.join(app.config["UPLOAD_PATH"], filename))
 
+    # Other options for uploads
     gcal_url = request.form.get("gcal_url")
     ical_url = request.form.get("ical_url")
+
+    # The user ID the events will be attached to
+    user_id = request.form.get("user_id")
 
     parse_and_save_calendar(
         path=os.path.join(app.config["UPLOAD_PATH"], filename)
@@ -92,6 +104,7 @@ def upload_calendar(calendar_id: str):
         gcal_url=gcal_url,
         ical_url=ical_url,
         calendar_id=calendar_id,
+        user_id=user_id,
     )
 
     return {"message": "ok"}
@@ -106,13 +119,20 @@ def get_raw_calendar(calendar_id: str, filename: str):
 # TODO: turn these into form fields, instead of hard-coded values
 @app.route("/event", methods=["GET"])
 def make_event():
+    label = request.form.get("label")
+    body = request.form.get("body")
+    calendar_id = request.form.get("calendar_id")
+    user_id = request.form.get("user_id")
+
     event = create_event(
-        label="Event 123",
-        body="Body 123",
+        label=label,
+        body=body,
         start_time=datetime.datetime.utcnow(),
         end_time=datetime.datetime.utcnow(),
-        calendar_id="2046ee9b-cd3f-4d4a-b021-9e8cf5ad000b",
+        calendar_id=calendar_id,
+        user_id=user_id,
     )
+
     return event.as_dict()
 
 
@@ -132,11 +152,16 @@ def get_event_by_id(event_id: str):
 # TODO: turn these into form fields, instead of hard-coded values
 @app.route("/user", methods=["POST"])
 def make_user():
+    label = request.form.get("label")
+    passphrase = request.form.get("passphrase")
+    calendar_id = request.form.get("calendar_id")
+
     user = create_user(
-        label="User 123",
-        passphrase="password",
-        calendar_id="2046ee9b-cd3f-4d4a-b021-9e8cf5ad000b",
+        label=label,
+        passphrase=passphrase,
+        calendar_id=calendar_id,
     )
+
     return user.as_dict()
 
 

@@ -10,7 +10,9 @@ from pprint import pprint
 logger = logging.getLogger()
 
 
-def parse_and_save_calendar(path: str, gcal_url: str, ical_url: str, calendar_id: str):
+def parse_and_save_calendar(
+    path: str, gcal_url: str, ical_url: str, calendar_id: str, user_id: str
+):
     """ """
 
     cal = None
@@ -24,7 +26,7 @@ def parse_and_save_calendar(path: str, gcal_url: str, ical_url: str, calendar_id
     if cal is None:
         return "ok"
 
-    save_calendar(cal, calendar_id)
+    save_calendar(cal, calendar_id=calendar_id, user_id=user_id)
 
     return "ok"
 
@@ -55,7 +57,7 @@ def display(cal):
     return cal.to_ical().replace("\r\n", "\n").strip()
 
 
-def save_calendar(cal, calendar_id: str):
+def save_calendar(cal, calendar_id: str, user_id: str):
     """ """
     for event in cal.subcomponents:
         try:
@@ -75,6 +77,7 @@ def save_calendar(cal, calendar_id: str):
                 start_time=start_time,
                 end_time=end_time,
                 calendar_id=calendar_id,
+                user_id=user_id,
             )
         except KeyError:
             logger.warn("Got key error in calendar")
