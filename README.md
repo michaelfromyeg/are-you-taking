@@ -8,6 +8,9 @@
 - Share your calendar with friends
 - Compare your calendars
 
+![Banner](Images/are-you-taking-banner.jpeg)
+![Home](Images/home-page.png)
+![Share](Images/share-page.png)
   
 ## Authors
 
