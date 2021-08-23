@@ -1,6 +1,6 @@
 # Are You Taking (AYT) 📅🤔
 
-<p style="text-align: center">
+<p align="center" style="text-align: center">
   <img src="./images/are-you-taking-banner.jpg" style="box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);" width="400px" />
 </p>
 
@@ -23,7 +23,7 @@ In the future we hope to support different calendar sources and support calendar
 
 This is the homepage, structured a bit like when2meet.
 
-<p style="text-align: center">
+<p align="center" style="text-align: center">
   <img alt="Are You Taking homepage" src="./images/home-page.png" style="box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);" width="400px" />
 </p>
 
@@ -31,7 +31,7 @@ This is the homepage, structured a bit like when2meet.
 
 This page pops up after a calendar upload.
 
-<p style="text-align: center">
+<p align="center" style="text-align: center">
   <img alt="AYT share page" src="./images/share-page.png" style="box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);" width="400px" />
 </p>
 
