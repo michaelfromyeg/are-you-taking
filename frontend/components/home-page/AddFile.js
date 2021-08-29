@@ -1,7 +1,7 @@
 import styles from './AddFile.module.scss'
-import { Formik, Form, ErrorMessage } from 'formik'
+import { Formik, ErrorMessage, Form } from 'formik'
 import { useRouter } from 'next/router'
-import Button from 'react-bootstrap/Button'
+import { Button, Container } from 'react-bootstrap'
 import { useState } from 'react'
 
 const AddFile = () => {
@@ -51,25 +51,27 @@ const AddFile = () => {
 		>
 			{(formik) => {
 				return (
-					<Form className={styles.form}>
-						<label className={styles.label}>Name: </label>
-						<input className={styles.name} type="text" value={name} onChange={event => setName(event.target.value)}></input>
-						<input
-							className={styles.file}
-							id="file"
-							name="calendar"
-							type="file"
-							onChange={(event) => {
-								const files = event.target.files;
-								let myFiles = Array.from(files);
-								formik.setFieldValue("calendar", myFiles);
-							}}
-						/>
+					<Form className={`${styles.form} container-md`}>
+	
+						<div className="row g-3">
+							<div className="col-md-6">
+								<label className={styles.label} htmlFor="name">Name: </label>
+								<input className="form-control" id="name" placeholder="name" value={name} type="text" onChange={event => setName(event.target.value)} required/>
+							</div>
+							<div className="col-md-6">
+								<label className={styles.label} htmlFor="file">Upload my .ics calendar file:</label>
+								<input className="form-control" id="file" name="calendar" type="file" onChange={event => {
+									const files = event.target.files;
+									let myFiles = Array.from(files);
+									formik.setFieldValue("calendar", myFiles);
+								}} required/>
+							</div>
+							<div className="col-md-1">
+								<Button className={styles.submit} type="submit" disabled={formik.isSubmitting}>Submit</Button>
+							</div>
+						</div>
+						
 						<ErrorMessage name="calendar" />
-						<Button className={styles.submit} type="submit" disabled={formik.isSubmitting}>
-							Submit
-						</Button>
-
 					</Form>
 				)
 			}}
