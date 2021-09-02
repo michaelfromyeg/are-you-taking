@@ -1,0 +1,18 @@
+@import "../../styles/variables";
+
+.form {
+  padding: 1em;
+  background-color: $gold;
+  border-radius: 25px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+.submit:hover {
+  background-color: $purple;
+  border-color: $purple;
+}
+.label {
+  color: $purple;
+  font-weight: bold;
+  font-size: 1.25rem;
+}

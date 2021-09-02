@@ -1,7 +1,7 @@
 import styles from './AddFile.module.scss'
 import { Formik, ErrorMessage, Form } from 'formik'
 import { useRouter } from 'next/router'
-import { Button, Container } from 'react-bootstrap'
+import { Button, Row, Col} from 'react-bootstrap'
 import { useState } from 'react'
 
 const AddFile = () => {
@@ -53,23 +53,23 @@ const AddFile = () => {
 				return (
 					<Form className={`${styles.form} container-md`}>
 	
-						<div className="row g-3">
-							<div className="col-md-6">
+						<Row className="g-3">
+							<Col md={6}>
 								<label className={styles.label} htmlFor="name">Name: </label>
 								<input className="form-control" id="name" placeholder="name" value={name} type="text" onChange={event => setName(event.target.value)} required/>
-							</div>
-							<div className="col-md-6">
+							</Col>
+							<Col md={6}>
 								<label className={styles.label} htmlFor="file">Upload my .ics calendar file:</label>
 								<input className="form-control" id="file" name="calendar" type="file" onChange={event => {
 									const files = event.target.files;
 									let myFiles = Array.from(files);
 									formik.setFieldValue("calendar", myFiles);
 								}} required/>
-							</div>
-							<div className="col-md-1">
+							</Col>
+							<Col md={12}>
 								<Button className={styles.submit} type="submit" disabled={formik.isSubmitting}>Submit</Button>
-							</div>
-						</div>
+							</Col>
+						</Row>
 						
 						<ErrorMessage name="calendar" />
 					</Form>
