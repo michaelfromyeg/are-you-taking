@@ -1,0 +1,41 @@
+version: "3"
+
+networks:
+  cockroachdb_net:
+    external: true
+
+services:
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./controller
+    ports:
+      - "5000:80"
+  node:
+    container_name: node
+    image: cockroachdb/cockroach:latest
+    volumes:
+      - ./data/node:/cockroach/cockroach-data
+    command: start-single-node --insecure
+    ports:
+      - "26257:26257"
+      - "8080:8080"
+    networks:
+      cockroachdb_net:
+        aliases:
+          - node
+  server:
+    build:
+      dockerfile: Dockerfile
+      context: ./server
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+  client:
+    build:
+      dockerfile: Dockerfile
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app

@@ -37,17 +37,32 @@ This page pops up after a calendar upload.
 
 ## Tech Stack ⌨️
 
-- **Client:** JavaScript (React), Next, Sass, react-big-calendar, react-bootstrap
-- **Server:** Python (Flask), CockroachDB, Docker, Google Cloud Platform
+* **Client:** JavaScript (React), Next, Sass, react-big-calendar, react-bootstrap
+* **Server:** Python (Flask), CockroachDB, Docker, Google Cloud Platform
 
 ## Run Locally
 
 TODO!
 
+### Run CockroachDB with Docker
+
+```shellscript
+docker network create -d bridge cockroachdb_net
+docker run -d                                     \
+    --hostname=node                               \
+    --name=node                                   \
+    -p 26257:26257 -p 8080:8080                   \
+    --net=cockroachdb_net                         \
+    -v "data:/cockroach/cockroach-data"           \
+    cockroachdb/cockroach:latest start            \
+    --join=node,                                  \
+    --insecure
+```
+
 ## Authors 🧑‍💻👩‍💻
 
-- [@michaeldemarco](https://github.com/michaelfromyeg)
-- [@benvinnick](https://github.com/bonvee-99)
+* [@michaeldemarco](https://github.com/michaelfromyeg)
+* [@benvinnick](https://github.com/bonvee-99)
 
 ## Notes
 

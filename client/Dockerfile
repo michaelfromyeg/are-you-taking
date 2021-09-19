@@ -1,7 +1,7 @@
 FROM node:14.17.5
 
 # Create and change to the app directory.
-WORKDIR /usr/app
+WORKDIR /app
 
 # Copy application dependency manifests to the container image.
 # A wildcard is used to ensure copying both package.json AND package-lock.json (when available).
@@ -16,4 +16,4 @@ RUN npm ci --only=production
 RUN npm run build
 
 # Run the web service on container startup.
-CMD [ "npm", "start" ]
+CMD [ "npm", "dev" ]

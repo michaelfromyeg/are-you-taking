@@ -1,11 +1,11 @@
 {
     "editor.formatOnSave": true,
-    "python.pythonPath": "./backend/env/bin/activate",
+    "python.pythonPath": "./server/env/bin/activate",
     "python.analysis.extraPaths": [
-        "./backend",
-        "./backend/src",
-        "./backend/models",
-        "./backend/test",
+        "./server",
+        "./server/src",
+        "./server/models",
+        "./server/test",
     ],
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,

@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "prepare": "is-ci || cd .. && husky install frontend/.husky"
+    "prepare": "is-ci || cd .. && husky install client/.husky"
   },
   "devDependencies": {
     "husky": "7.0.2"

@@ -1,5 +1,7 @@
 ### General
 
+node_modules
+
 *.ics
 .env
 .env.production

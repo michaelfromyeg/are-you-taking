@@ -1,13 +1,13 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-cd frontend
+cd client
 
 npx lint-staged
 npm test
 
 cd ..
 
-cd backend
+cd server
 
 pytest
