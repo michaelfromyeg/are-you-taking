@@ -4,7 +4,8 @@
     "python.analysis.extraPaths": [
         "./backend",
         "./backend/src",
-        "./backend/env",
+        "./backend/models",
+        "./backend/test",
     ],
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,

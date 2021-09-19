@@ -3,15 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "next start -p $PORT",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p $PORT",
+    "test": "echo \"TODO: write tests!\"",
     "lint": "eslint --fix .",
-    "format": "prettier --write --ignore-unknown .",
-    "prepare": "is-ci || cd .. && husky install frontend/.husky"
+    "format": "prettier --write --ignore-unknown ."
   },
   "lint-staged": {
-    "**/*": "npm run lint && npm run format"
+    "*.js,*.jsx": [
+      "npm run lint"
+    ],
+    "**/*": [
+      "npm run format"
+    ]
   },
   "dependencies": {
     "bootstrap": "^5.1.0",
@@ -26,13 +31,14 @@
     "sass": "^1.38.0"
   },
   "devDependencies": {
+    "@commitlint/config-conventional": "13.1.0",
     "commitlint": "13.1.0",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-react": "7.25.2",
-    "husky": "7.0.2",
+    "husky": "^7.0.0",
     "is-ci": "3.0.0",
     "lint-staged": "11.1.2",
     "prettier": "2.4.1"

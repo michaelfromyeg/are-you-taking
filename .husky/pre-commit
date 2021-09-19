@@ -1,4 +1,13 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-cd frontend && npx lint-staged && npm test
+cd frontend
+
+npx lint-staged
+npm test
+
+cd ..
+
+cd backend
+
+pytest
