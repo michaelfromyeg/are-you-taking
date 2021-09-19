@@ -1,7 +1,7 @@
-import Head from 'next/head'
-import Header from '../components/Header'
-import AddFile from '../components/home-page/AddFile'
-import Footer from '../components/Footer'
+import Head from "next/head";
+import Header from "../components/Header";
+import AddFile from "../components/home-page/AddFile";
+import Footer from "../components/Footer";
 
 export default function Home() {
   return (
@@ -11,9 +11,12 @@ export default function Home() {
       </Head>
       <Header text="are you taking" />
 
-      <p style={{ textAlign: "center", marginBottom: "3em" }}>Upload any <code>.ics</code> file to instantly compare your class schedule with other students!</p>
+      <p style={{ textAlign: "center", marginBottom: "3em" }}>
+        Upload any <code>.ics</code> file to instantly compare your class
+        schedule with other students!
+      </p>
       <AddFile />
       <Footer />
     </>
-  )
+  );
 }

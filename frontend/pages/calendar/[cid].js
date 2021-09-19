@@ -1,56 +1,53 @@
-import MainContainer from '../../components/share-page/MainContainer'
-import Header from '../../components/Header'
-import Share from '../../components/share-page/Share'
-import FileUpload from '../../components/share-page/FileUpload'
-import { useState, useEffect } from 'react'
-
+import MainContainer from "../../components/share-page/MainContainer";
+import Header from "../../components/Header";
+import Share from "../../components/share-page/Share";
+import FileUpload from "../../components/share-page/FileUpload";
+import { useState, useEffect } from "react";
 
 const SharedCalendarPage = ({ id }) => {
-	const [calendar, setCalendar] = useState({
-		events: [],
-		users: [],
-		label: 'Loading...',
-	})
-	const [loading, setLoading] = useState(true)
+  const [calendar, setCalendar] = useState({
+    events: [],
+    users: [],
+    label: "Loading...",
+  });
+  const [loading, setLoading] = useState(true);
 
-	const baseUrl = process.env.API_URL || "http://localhost:8080"
+  const baseUrl = process.env.API_URL || "http://localhost:8080";
 
-	useEffect(() => {
-		const fetchCalendar = async () => {
-			try {
-				console.log('id', id)
-				const response = await fetch(`${baseUrl}/calendar/${id}`)
-				const responseBody = await response.json()
-				console.log(responseBody)
-				setCalendar(responseBody)
-			} catch (error) {
-				console.error(error)
-			} finally {
-				setLoading(false)
-			}
-		}
+  useEffect(() => {
+    const fetchCalendar = async () => {
+      try {
+        console.log("id", id);
+        const response = await fetch(`${baseUrl}/calendar/${id}`);
+        const responseBody = await response.json();
+        console.log(responseBody);
+        setCalendar(responseBody);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-		fetchCalendar()
-	}, [])
+    fetchCalendar();
+  }, []);
 
-	return (
-		<div>
-			<Header text="share calendar" />
-			<Share url={`${baseUrl}/${id}`} />
-			<FileUpload id={id} />
-			<MainContainer calendar={calendar} loading={loading} />
-		</div>
-	)
-}
+  return (
+    <div>
+      <Header text="share calendar" />
+      <Share url={`${baseUrl}/${id}`} />
+      <FileUpload id={id} />
+      <MainContainer calendar={calendar} loading={loading} />
+    </div>
+  );
+};
 
-
-
-export default SharedCalendarPage
+export default SharedCalendarPage;
 
 export async function getServerSideProps(context) {
-	return {
-		props: {
-			id: context.params.cid
-		},
-	}
+  return {
+    props: {
+      id: context.params.cid,
+    },
+  };
 }

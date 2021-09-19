@@ -1,18 +1,21 @@
 {
-    "python.pythonPath": "../backend/env/bin/activate",
+    "editor.formatOnSave": true,
+    "python.pythonPath": "./backend/env/bin/activate",
     "python.analysis.extraPaths": [
-        "backend"
+        "./backend",
+        "./backend/src",
+        "./backend/env",
     ],
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
     "cSpell.enabled": true,
     "cSpell.words": [
-        "DTEND",
-        "Vinnick",
         "cockroachdb",
+        "commitlint",
         "connor",
         "datepicker",
         "dotenv",
+        "DTEND",
         "formik",
         "gcal",
         "ical",
@@ -20,6 +23,7 @@
         "icalevents",
         "noreferrer",
         "psycopg",
+        "Vinnick",
         "werkzeug"
     ],
 }

@@ -3,7 +3,7 @@ from icalendar.prop import vDDDTypes, vDatetime
 from icalevents.icalevents import events
 from icalendar import Calendar, Event, vText
 
-from transactions import create_event
+from src.transactions import create_event
 
 from pprint import pprint
 

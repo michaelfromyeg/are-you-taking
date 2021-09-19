@@ -6,7 +6,7 @@ from sqlalchemy_cockroachdb import run_transaction
 
 from dotenv import load_dotenv
 
-from models import Calendar, Event, User
+from models.models import Calendar, Event, User
 
 engine = None
 
