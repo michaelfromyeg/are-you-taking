@@ -14,7 +14,7 @@ In the future we hope to support different calendar sources and support calendar
 
 ## Features 👇
 
-* Upload your calendar.ics file
+* Upload your calendar `.ics` file
 * Share your calendar with friends
 * Compare your calendars
 * Toggle displayed users
@@ -42,9 +42,58 @@ This page pops up after a calendar upload.
 
 ## Run Locally
 
-TODO!
+Here are instructions to run the project locally.
+
+### Run Client
+
+You'll need the following prerequisite applications on your machine.
+
+* `npm`, `npm --version >= 6.14.15`
+
+To get started with the client application,
+
+1. `cd client`
+2. `npm ci && npm t`
+
+   (The tests should be passing.)
+
+3. `npm run dev`
+
+    (You should see the server be spun up.)
+
+Head to [`localhost:3000`](http://localhost:3000) (or whatever the URL spit out by `next` is) and start developing!
+
+### Run Server
+
+You'll need the following prerequisite applications on your machine.
+
+* `python`, `python --version >= 3.8.10`
+* `pip`, `pip --version >= 21.1.3`
+
+Begin by creating a virtual environment.
+
+1. `python -m venv env`
+2. `source env/bin/activate`
+3. `pip install -r requirements.txt`
+4. `pip freeze > requirements.txt`
+5. `python -m unittest -v`
+
+    (The tests should pass!)
+
+6. `python main.py`
+
+    (The server will now start!)
+
+Open the server to see a simple hello-world response. For example,
+
+```shellscript
+$ curl http://172.20.224.196:8080/
+> are-you-taking is live!
+```
 
 ### Run CockroachDB with Docker
+
+You may want to spin up a local CockroachDB instance. To do so,
 
 ```shellscript
 docker network create -d bridge cockroachdb_net
@@ -58,6 +107,10 @@ docker run -d                                     \
     --join=node,                                  \
     --insecure
 ```
+
+In our case, we just used a dummy cluster for testing; that was more than enough (and free). Either alternative is fine.
+
+With the client, server, and database configured, you're now ready to begin development!
 
 ## Authors 🧑‍💻👩‍💻
 

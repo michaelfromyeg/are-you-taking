@@ -1,6 +1,7 @@
 {
     "editor.formatOnSave": true,
     "python.pythonPath": "./server/env/bin/activate",
+    "python.defaultInterpreterPath": "./server/env/bin/python",
     "python.analysis.extraPaths": [
         "./server",
         "./server/src",
@@ -24,7 +25,9 @@
         "icalevents",
         "noreferrer",
         "psycopg",
+        "venv",
         "Vinnick",
         "werkzeug"
     ],
+    "cmake.configureOnOpen": false,
 }
